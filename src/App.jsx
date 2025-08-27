@@ -1,13 +1,15 @@
-
-import Login from './login/Login.jsx'
-
+import PrimaryButton from "./components/PrimaryButton.jsx";
+import "./App.css";
+import Register from "./pages/Register/Register.jsx";
+// import Login from "./login/Login.jsx";
 function App() {
-
   return (
     <>
-      <Login/>
+      {/* <Login /> */}
+      <Register />
+      {/* <PrimaryButton label={"Learn More"} /> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
