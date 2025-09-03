@@ -1,8 +1,8 @@
 import React from "react";
 import "./register.css";
-import PrimaryButton from "../../components/PrimaryButton";
-import SecondaryButton from "../../components/SecondaryButton";
-import CustomInput from "../../components/CustomInput";
+import PrimaryButton from "../../../components/PrimaryButton";
+import SecondaryButton from "../../../components/SecondaryButton";
+import CustomInput from "../../../components/CustomInput";
 import { Link } from "react-router-dom";
 
 const Register = () => {
