@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 
 /** Single leave card */
 const EachLeaveCard = ({ remainingLeave, label }) => {
+  // convert label to slug for URL
+  const leaveSlug = label.toLowerCase().replace(/\s+/g, "-");
+
   return (
     <div className="leave-card bg-[#253D90] rounded-[16px] p-4 pr-[25px] text-white flex items-center mb-[20px] gap-3 shadow-md justify-between">
       <span className="text-[42px] text-[#253D90] rounded-full bg-white h-[90px] aspect-square font-bold flex items-center justify-center">
@@ -13,9 +16,10 @@ const EachLeaveCard = ({ remainingLeave, label }) => {
       <div className="flex flex-col gap-2 items-center">
         <h4 className="text-lg font-medium">{label}</h4>
         <Link
-          to="/apply-for-leave/form" // adjust if you have a specific form route
+          to={`/apply-for-leave/${leaveSlug}`}
           className="bg-[#FFC20E] text-[#1D1D1D] font-semibold px-[40px] py-[4px] rounded-full text-center text-[14px]"
         >
+        {console.log(label)}
           Apply
         </Link>
       </div>
@@ -32,80 +36,79 @@ const ApplyLeave = () => {
   });
 
   const [leaveHistory] = useState([
-  {
-    name: "Annual Leave",
-    duration: "3 days",
-    startDate: "2025-09-01",
-    endDate: "2025-09-03",
-    type: "Annual",
-    reason: "Family event",
-    status: "Approved",
-  },
-  {
-    name: "Sick Leave",
-    duration: "1 day",
-    startDate: "2025-08-20",
-    endDate: "2025-08-20",
-    type: "Sick",
-    reason: "Flu",
-    status: "Approved",
-  },
-  {
-    name: "Compassionate Leave",
-    duration: "2 days",
-    startDate: "2025-07-15",
-    endDate: "2025-07-16",
-    type: "Compassionate",
-    reason: "Family emergency",
-    status: "Approved",
-  },
-  {
-    name: "Annual Leave",
-    duration: "5 days",
-    startDate: "2025-06-10",
-    endDate: "2025-06-14",
-    type: "Annual",
-    reason: "Vacation trip",
-    status: "Pending",
-  },
-  {
-    name: "Maternity Leave",
-    duration: "60 days",
-    startDate: "2025-05-01",
-    endDate: "2025-06-30",
-    type: "Maternity",
-    reason: "Child birth",
-    status: "Approved",
-  },
-  {
-    name: "Sick Leave",
-    duration: "2 days",
-    startDate: "2025-04-12",
-    endDate: "2025-04-13",
-    type: "Sick",
-    reason: "Medical procedure",
-    status: "Rejected",
-  },
-  {
-    name: "Annual Leave",
-    duration: "1 day",
-    startDate: "2025-03-22",
-    endDate: "2025-03-22",
-    type: "Annual",
-    reason: "Personal work",
-    status: "Approved",
-  },
-  {
-    name: "Compassionate Leave",
-    duration: "1 day",
-    startDate: "2025-02-18",
-    endDate: "2025-02-18",
-    type: "Compassionate",
-    reason: "Family matter",
-    status: "Approved",
-  },
-]);
-
+    {
+      name: "Annual Leave",
+      duration: "3 days",
+      startDate: "2025-09-01",
+      endDate: "2025-09-03",
+      type: "Annual",
+      reason: "Family event",
+      status: "Approved",
+    },
+    {
+      name: "Sick Leave",
+      duration: "1 day",
+      startDate: "2025-08-20",
+      endDate: "2025-08-20",
+      type: "Sick",
+      reason: "Flu",
+      status: "Approved",
+    },
+    {
+      name: "Compassionate Leave",
+      duration: "2 days",
+      startDate: "2025-07-15",
+      endDate: "2025-07-16",
+      type: "Compassionate",
+      reason: "Family emergency",
+      status: "Approved",
+    },
+    {
+      name: "Annual Leave",
+      duration: "5 days",
+      startDate: "2025-06-10",
+      endDate: "2025-06-14",
+      type: "Annual",
+      reason: "Vacation trip",
+      status: "Pending",
+    },
+    {
+      name: "Maternity Leave",
+      duration: "60 days",
+      startDate: "2025-05-01",
+      endDate: "2025-06-30",
+      type: "Maternity",
+      reason: "Child birth",
+      status: "Approved",
+    },
+    {
+      name: "Sick Leave",
+      duration: "2 days",
+      startDate: "2025-04-12",
+      endDate: "2025-04-13",
+      type: "Sick",
+      reason: "Medical procedure",
+      status: "Rejected",
+    },
+    {
+      name: "Annual Leave",
+      duration: "1 day",
+      startDate: "2025-03-22",
+      endDate: "2025-03-22",
+      type: "Annual",
+      reason: "Personal work",
+      status: "Approved",
+    },
+    {
+      name: "Compassionate Leave",
+      duration: "1 day",
+      startDate: "2025-02-18",
+      endDate: "2025-02-18",
+      type: "Compassionate",
+      reason: "Family matter",
+      status: "Approved",
+    },
+  ]);
 
   return (
     <UserLayout>
@@ -125,10 +128,22 @@ const ApplyLeave = () => {
 
         {/* Leave cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-6">
-          <EachLeaveCard label="Annual Leave" remainingLeave={leaveData.annualLeave} />
-          <EachLeaveCard label="Sick Leave" remainingLeave={leaveData.sickLeave} />
-          <EachLeaveCard label="Maternity Leave" remainingLeave={leaveData.maternityLeave} />
-          <EachLeaveCard label="Compassionate Leave" remainingLeave={leaveData.compassionateLeave} />
+          <EachLeaveCard
+            label="Annual Leave"
+            remainingLeave={leaveData.annualLeave}
+          />
+          <EachLeaveCard
+            label="Sick Leave"
+            remainingLeave={leaveData.sickLeave}
+          />
+          <EachLeaveCard
+            label="Maternity Leave"
+            remainingLeave={leaveData.maternityLeave}
+          />
+          <EachLeaveCard
+            label="Compassionate Leave"
+            remainingLeave={leaveData.compassionateLeave}
+          />
         </div>
       </SectionLayout>
 
@@ -165,7 +180,10 @@ const ApplyLeave = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" className="text-center px-4 py-4 text-gray-500">
+                  <td
+                    colSpan="7"
+                    className="text-center px-4 py-4 text-gray-500"
+                  >
                     No leave records found.
                   </td>
                 </tr>
